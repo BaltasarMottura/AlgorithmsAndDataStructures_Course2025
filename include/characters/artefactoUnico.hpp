@@ -16,10 +16,9 @@
 class ArtefactoUnico : public EntidadGenerica
 {
 private:
-    std::string m_rarity; ///< Rareza del artefacto (por ejemplo: "Legendario", "Prototipo", "Desconocido")
-    EngineData::UniqueArtifactType
-        m_type;          ///< Tipo de artefacto (por ejemplo: "Tecnología", "Arma", "Medicina", "Módulo de defensa")
-    double m_durability; ///< Nivel de durabilidad restante del artefacto (de 0.0 a 100.0)
+    std::string m_rarity;                       ///< Rareza del artefacto ("Legendario", "Prototipo", "Desconocido")
+    EngineData::UniqueArtifactType m_type;      ///< Tipo de artefacto ("Tecnología", "Arma", "Medicina", "Módulo de defensa")
+    double m_durability;                        ///< Nivel de durabilidad restante del artefacto (de 0.0 a 100.0)
 
 public:
     /**
@@ -83,6 +82,10 @@ public:
     {
         return m_durability <= 0.0;
     }
+
+    std::string getNombre(){
+        return m_name;
+        }
 };
 
 #endif // ARTEFACTOUNICO_HPP
