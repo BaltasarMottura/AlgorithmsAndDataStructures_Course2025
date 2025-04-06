@@ -83,9 +83,6 @@ public:
     {
         return m_durability <= 0.0;
     }
-    std::string getNombre(){
-        return m_name;
-    }
 };
 
 #endif // ARTEFACTOUNICO_HPP
