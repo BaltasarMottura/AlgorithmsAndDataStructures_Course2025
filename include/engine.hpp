@@ -1,10 +1,12 @@
 #ifndef ENGINE_HPP
 #define ENGINE_HPP
 
+#include "Evento.h"
+#include "Queue.hpp"
+#include "engineData.hpp"
 #include "gameSerializer.hpp"
 #include "randomEventGenerator.hpp"
 #include "refugio.hpp"
-#include "engineData.hpp"
 #include <chrono>
 #include <filesystem>
 #include <iostream>
@@ -12,6 +14,7 @@
 #include <thread>
 #include <unordered_map>
 
+#include <Stack.hpp>
 #ifdef _WIN32
 #include <windows.h>
 #define CLEAR_SCREEN "cls"
@@ -81,7 +84,38 @@ public:
      */
     const EngineData::PlayerInfo& playerInfo() const;
 
+    /**
+     * @brief agrega un nuevo evento a la Cola
+     * @param evento evento a agregar
+     */
+    void oneNewEvent(const Evento& evento);
+
+    /**
+     *@brief registra una decicion tomada por el jugador a modo de historial
+     *@param accion accion a agregar
+    */
+    void registerDecision(const std::string& accion);
+
+    /**
+    *Procesar eventos pendientes. Los devuelve en formato string para que el jugardor lo
+    *vea por pantalla.
+    *@return evento en formato string
+    */
+    void procesarEventosPendientes();
+
+    /**
+     * @brief Muestra el historial de todas las decisiones tomadas
+     * @return Todos los elementos de la pila
+     */
+    void mostrarHistorialDecisiones();
+
 private:
+    /**
+     * Implementacion de colas y pilas
+     */
+    Queue<Evento> m_eventosPendientes;
+    Stack<std::string> m_historialDecisiones;
+
     /**
      * @brief: Inicializa los recursos del tablero
      */

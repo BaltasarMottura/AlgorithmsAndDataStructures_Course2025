@@ -1,6 +1,42 @@
 #include "engine.hpp"
 
 #include <fstream>
+void Engine::oneNewEvent(const Evento& evento)
+{
+    m_eventosPendientes.enqueue(evento);
+}
+
+void Engine::registerDecision(const std::string& accion)
+{
+    m_historialDecisiones.push(accion);
+}
+
+void Engine::procesarEventosPendientes()
+{
+    if (m_eventosPendientes.isEmpty())
+    {
+        return;
+    }
+
+    const Evento& evento = m_eventosPendientes.front();
+    std::cout << evento.eventToString() << std::endl;
+    m_eventosPendientes.dequeue();
+
+    procesarEventosPendientes();
+}
+void Engine::mostrarHistorialDecisiones()
+{
+    auto aux = m_historialDecisiones;
+    if (aux.isEmpty())
+    {
+        std::cout << "No se tomaron decisiones aun" << std::endl;
+    }
+    while (aux.size() > 0)
+    {
+        std::cout << "[DECISIOn]" << aux.top() << std::endl;
+        aux.pop();
+    }
+}
 
 void Engine::start()
 {
@@ -142,28 +178,40 @@ void Engine::interactiveConsole()
         std::cout << GREEN << "> " << RESET;
         std::cin >> input;
 
-        if (m_validOperations.find(input[0]) != m_validOperations.end())
+        if (input == "check")
+        {
+            procesarEventosPendientes();
+        }
+        else if (input == "history")
+        {
+            mostrarHistorialDecisiones();
+        }
+        else if (m_validOperations.find(input[0]) != m_validOperations.end())
         {
             switch (m_validOperations.at(input[0]))
             {
                 case Operation::SHOW_STATUS:
                     std::cout << "Mostrando detalles..." << std::endl;
-                    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-                    break;
+                std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+                break;
                 case Operation::EXIT:
                     std::cout << "Saliendo..." << std::endl;
-                    keepRunning = false;
-                    break;
-                default: std::cout << "Operación desconocida" << std::endl; break;
+                keepRunning = false;
+                break;
+                default:
+                    std::cout << "Operación desconocida" << std::endl;
+                break;
             }
         }
         else
         {
             std::cout << "Operación desconocida" << std::endl;
         }
+
         clearScreen();
     }
 }
+
 
 void Engine::engineConfig(const EngineData::GameConfig& config)
 {
