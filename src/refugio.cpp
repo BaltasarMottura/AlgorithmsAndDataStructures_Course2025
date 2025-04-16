@@ -22,43 +22,32 @@ void Refugio::showInfo() const
 
 void Refugio::doAction() const
 {
-    std::cout << "Los refujiados se encuentran criogenizados aun. Esperando niveles de radiacion segura en la superficie" << std::endl;
+    throw std::runtime_error("Not implemented yet");
 }
 
 void Refugio::addRefugee(const std::string& refugee)
 {
-    m_refugees.push_back(refugee);
-
+    throw std::runtime_error("Not implemented yet");
 }
 
 void Refugio::addResource(const std::string& resource, float amount)
 {
-    m_resources.push_back({resource, amount});
+    throw std::runtime_error("Not implemented yet");
 }
 
 bool Refugio::consumeResource(const std::string& resource, float amount)
 {
-    for (int i = 0; i < (int)m_resources.size(); i++)
-    {
-        if (m_resources[i].first == resource)
-        {
-            if (m_resources.at(i).second < amount)
-            {
-                return false;
-            }
-            m_resources[i].second -= amount;
-            return true;
-        }
-        i++;
-
-    }
+    throw std::runtime_error("Not implemented yet");
+    return false;
 }
 
 void Refugio::registerVisitant(const std::string& nombre, const EngineData::Faction faccion)
 {
     if (!isSafeFaction(faccion))
     {
-        std::cout << "La faccion: " << nombre << "; no puede entrar al refugio. No es seguro!" "\n";
+//        std::cout << "Acceso denegado: La facción " << faccionToString(faccion) << " no es segura para el refugio."
+  //                << std::endl;
+        return;
     }
 
     Visitante nuevoVisitante {nombre, faccion};
@@ -79,8 +68,6 @@ void Refugio::printRecursive(DoublyListNode<Visitante>* mNode)
         std::cout << "Fin del registro!" << std::endl;
         return;
     }
-    printRecursive(mNode->next);
-    std::cout << mNode->data.nombre << "\n";
 }
 
 
