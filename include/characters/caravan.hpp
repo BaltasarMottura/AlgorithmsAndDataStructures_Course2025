@@ -42,8 +42,7 @@ public:
         std::cout << " - Artefactos disponibles:\n";
         for (const auto& item : m_stock)
         {
-            std::cout << "  ";
-            item->showInfo();
+            item->show();
         }
     }
 
@@ -63,7 +62,7 @@ public:
 
         for (auto it = m_stock.begin(); it != m_stock.end(); ++it)
         {
-            if ((*it)->getNombre() == nombre)
+            if ((*it)->nombre() == nombre)
             {
                 std::cout << "💬 " << m_name << " >>> Excelente elección. Espero que lo uses bien." << std::endl;
                 auto item = *it;
@@ -87,18 +86,10 @@ public:
 private:
     void inicializarStock()
     {
-        using EngineData::UniqueArtifactType;
-
-        m_stock.emplace_back(std::make_shared<ArtefactoUnico>(
-            "Detector de Radiación", "Épico", UniqueArtifactType::TECHNOLOGY, 250.0));
-
-        m_stock.emplace_back(std::make_shared<ArtefactoUnico>(
-            "Pistola Láser Táctica", "Legendaria", UniqueArtifactType::WEAPON, 400.0));
-
-        m_stock.emplace_back(std::make_shared<ArtefactoUnico>(
-            "Batería de Fusión", "Rara", UniqueArtifactType::TECHNOLOGY, 320.0));
+        m_stock.emplace_back(std::make_shared<ArtefactoUnico>("Detector de Radiación", "Herramienta", "Épico", 250.0));
+        m_stock.emplace_back(std::make_shared<ArtefactoUnico>("Pistola Láser Táctica", "Arma", "Legendaria", 400.0));
+        m_stock.emplace_back(std::make_shared<ArtefactoUnico>("Batería de Fusión", "Energía", "Rara", 320.0));
     }
-
 };
 
 #endif // CARAVAN_HPP
